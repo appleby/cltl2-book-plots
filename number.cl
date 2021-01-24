@@ -34,15 +34,15 @@
 ;;;
 ; (picture 'identity)
 ; (picture 'exp)
-; (picture 'minus-over-plus)
+; (picture 'one-minus-over-one-plus)
 ; (picture 'sin)
 ; (picture 'cos)
 ; (picture 'tan)
 ; (picture 'sinh)
 ; (picture 'cosh)
 ; (picture 'tanh)
-; (picture 'sqrt-one-minus-sq)
-; (picture 'series)
+; (picture 'sqrt-square-minus-one)
+; (picture 'sqrt-one-plus-square)
 
 
 (defparameter units-to-show 4.1)
