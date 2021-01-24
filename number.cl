@@ -98,7 +98,7 @@
                               (not (close-enough f2 f3)))))
             (format t "~&Periodicity detected.")
             (setq to (+ from (* (signum (- to from)) 2 pi)))))))
-     (let ((fromrange (ignore-errors (rangeval from)))
+    (let ((fromrange (ignore-errors (rangeval from)))
           (torange (ignore-errors (rangeval to))))
       (if (losing fromrange)
           (if (losing torange)
