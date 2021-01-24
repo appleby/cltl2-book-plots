@@ -294,7 +294,7 @@
 
 (defun straight-line (from to wid stream)
   (format stream
-          "~%newpath  ~S ~S moveto  ~S ~S lineto  ~S ~
+          "~%newpath  ~F ~F moveto  ~F ~F lineto  ~F ~
            setlinewidth  1  setlinecap  stroke"
           (realpart from)
           (imagpart from)
@@ -311,14 +311,14 @@
              (ecase orientation
                (:horizontal
                 (comment-line stream
-                              "Horizontal line from (~S, ~S) to (~S, ~S)"
+                              "Horizontal line from (~F, ~F) to (~F, ~F)"
                               (round-real (* signum from))
                               (round-real other)
                               (round-real (* signum to))
                               (round-real other)))
                (:vertical
                 (comment-line stream
-                              "Vertical line from (~S, ~S) to (~S, ~S)"
+                              "Vertical line from (~F, ~F) to (~F, ~F)"
                               (round-real other)
                               (round-real (* signum from))
                               (round-real other)
@@ -367,7 +367,7 @@
 ;;; This function draws the annuli for the pattern.
 (defun shaded-annulus (inner outer sectors firstshade lastshade fn stream)
   (assert (zerop (mod sectors 4)))
-  (comment-line stream "Annulus ~S ~S ~S ~S ~S"
+  (comment-line stream "Annulus ~F ~F ~F ~F ~F"
                 (round-real inner) (round-real outer)
                 sectors firstshade lastshade)
   (dotimes (jj sectors)
@@ -377,7 +377,7 @@
              (midphase (/ (+ lophase hiphase) 2.0))
              (midradius (/ (+ inner outer) 2.0))
              (quadrant (floor (* j 4) sectors)))
-        (comment-line stream "Sector from ~S to ~S (quadrant ~S)"
+        (comment-line stream "Sector from ~F to ~F (quadrant ~S)"
                       (round-real lophase)
                       (round-real hiphase)
                       quadrant)
@@ -432,11 +432,11 @@
                              (- sectors 1)))))))
 
 (defun postscript-penstroke (stream wid)
-  (format stream "~%~S setlinewidth   1 setlinecap  stroke"
+  (format stream "~%~F setlinewidth   1 setlinecap  stroke"
           wid))
 
 (defun postscript-shade (stream shade)
-  (format stream "~%currentgray   ~S setgray   fill   setgray"
+  (format stream "~%currentgray   ~F setgray   fill   setgray"
           shade))
 
 (defun postscript-closed-path (stream path)
@@ -451,7 +451,7 @@
 ;;; Print a path as a series of PostScript "lineto" commands.
 (defun postscript-raw-path (stream path)
   (format stream "~%newpath")
-  (let ((fmt "~%  ~S ~S moveto"))
+  (let ((fmt "~%  ~F ~F moveto"))
     (dolist (pt path)
       (cond ((stringp pt)
              (format stream "~%  %~A" pt))
@@ -459,7 +459,7 @@
                        fmt
                        (clamp-real (realpart pt))
                        (clamp-real (imagpart pt)))
-               (setq fmt "~%  ~S ~S lineto"))))))
+               (setq fmt "~%  ~F ~F lineto"))))))
 
 ;;; Definitions of functions to be plotted that are not
 ;;; standard Common Lisp functions.
@@ -497,19 +497,19 @@
                                        "-plot.ps")
                           :direction :output)
     (format stream "% PostScript file for plot of function ~S~%" fn)
-    (format stream "% Plot is to fit in a region ~S inches square~%"
+    (format stream "% Plot is to fit in a region ~F inches square~%"
             (/ text-width-in-picas 6.0))
     (format stream
-            "%  showing axes extending ~S units from the origin.~%"
+            "%  showing axes extending ~F units from the origin.~%"
             units-to-show)
     (let ((scaling (/ (* text-width-in-picas 12) (* units-to-show 2))))
-      (format stream "~%~S ~:*~S scale" scaling))
-    (format stream "~%~S ~:*~S translate" units-to-show)
+      (format stream "~%~F ~:*~F scale" scaling))
+    (format stream "~%~F ~:*~F translate" units-to-show)
     (format stream "~%newpath")
-    (format stream "~%  ~S ~S moveto" (- units-to-show) (- units-to-show))
-    (format stream "~%  ~S ~S lineto" units-to-show (- units-to-show))
-    (format stream "~%  ~S ~S lineto" units-to-show units-to-show)
-    (format stream "~%  ~S ~S lineto" (- units-to-show) units-to-show)
+    (format stream "~%  ~F ~F moveto" (- units-to-show) (- units-to-show))
+    (format stream "~%  ~F ~F lineto" units-to-show (- units-to-show))
+    (format stream "~%  ~F ~F lineto" units-to-show units-to-show)
+    (format stream "~%  ~F ~F lineto" (- units-to-show) units-to-show)
     (format stream "~%  closepath")
     (format stream "~%clip")
     (moby-grid fn stream)
