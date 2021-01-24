@@ -502,6 +502,9 @@
     (format stream
             "%  showing axes extending ~F units from the origin.~%"
             units-to-show)
+    (let ((text-width-in-points (* text-width-in-picas 12)))
+      (format stream "~%<</PageSize [~F ~:*~F]>> setpagedevice"
+              text-width-in-points))
     (let ((scaling (/ (* text-width-in-picas 12) (* units-to-show 2))))
       (format stream "~%~F ~:*~F scale" scaling))
     (format stream "~%~F ~:*~F translate" units-to-show)
