@@ -225,9 +225,9 @@
 
 (defun repair-quadrant (z quadrant)
   (complex (* (+ (abs (realpart z)) tiny)
-              (case quadrant (0 1.0) (1 -1.0) (2 -1.0) (3 1.0)))
+              (ecase quadrant (0 1.0) (1 -1.0) (2 -1.0) (3 1.0)))
            (* (+ (abs (imagpart z)) tiny)
-              (case quadrant (0 1.0) (1 1.0) (2 -1.0) (3 -1.0)))))
+              (ecase quadrant (0 1.0) (1 1.0) (2 -1.0) (3 -1.0)))))
 
 (defun clamp-real (x)
   (if (far-out x)
